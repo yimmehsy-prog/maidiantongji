@@ -11,24 +11,42 @@ const funnelData = [
 ];
 
 const channelPerformance = [
-  { channel: 'Facebook Ads', type: '自营投流 (Direct)', spend: '$22,200', revenue: '$27,750', installs: '12K', cpi: '$1.85', roas: '125%' },
-  { channel: 'TikTok Ads', type: '自营投流 (Direct)', spend: '$25,560', revenue: '$37,828', installs: '18K', cpi: '$1.42', roas: '148%' },
-  { channel: 'Google Ads', type: '自营投流 (Direct)', spend: '$10,500', revenue: '$9,975', installs: '5K', cpi: '$2.10', roas: '95%' },
-  { channel: 'KOL Affiliate Network', type: '分销网络 (Affiliate)', spend: '$4,500', revenue: '$11,250', installs: '3.5K', cpi: '$1.28', roas: '250%' },
-  { channel: 'Web Novel Publishers', type: '分销网络 (Affiliate)', spend: '$2,800', revenue: '$5,880', installs: '2.2K', cpi: '$1.27', roas: '210%' },
+  { channel: 'Facebook Ads', type: '自营投流 (Direct)', spend: { amount: 22200, currency: 'USD' }, revenue: { amount: 27750, currency: 'USD' }, installs: '12K', cpi: { amount: 1.85, currency: 'USD' }, roas: '125%' },
+  { channel: 'TikTok Ads', type: '自营投流 (Direct)', spend: { amount: 25560, currency: 'USD' }, revenue: { amount: 37828, currency: 'USD' }, installs: '18K', cpi: { amount: 1.42, currency: 'USD' }, roas: '148%' },
+  { channel: 'Google Ads', type: '自营投流 (Direct)', spend: { amount: 10500, currency: 'USD' }, revenue: { amount: 9975, currency: 'USD' }, installs: '5K', cpi: { amount: 2.10, currency: 'USD' }, roas: '95%' },
+  { channel: 'KOL Affiliate Network', type: '分销网络 (Affiliate)', spend: { amount: 4500, currency: 'USD' }, revenue: { amount: 11250, currency: 'USD' }, installs: '3.5K', cpi: { amount: 1.28, currency: 'USD' }, roas: '250%' },
+  { channel: 'Web Novel Publishers', type: '分销网络 (Affiliate)', spend: { amount: 100000, currency: 'THB' }, revenue: { amount: 200000, currency: 'THB' }, installs: '2.2K', cpi: { amount: 45, currency: 'THB' }, roas: '200%' },
 ];
 
 export default function UserAcquisition({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+  const formatCurrency = (val: { amount: number, currency: string }) => {
+    return val.currency === 'USD' ? `$${val.amount.toLocaleString()}` : `฿${val.amount.toLocaleString()}`;
+  };
+
+  const totalSpend = channelPerformance.reduce((acc, curr) => {
+    acc[curr.spend.currency] = (acc[curr.spend.currency] || 0) + curr.spend.amount;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const totalRevenue = channelPerformance.reduce((acc, curr) => {
+    acc[curr.revenue.currency] = (acc[curr.revenue.currency] || 0) + curr.revenue.amount;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500 mb-1">总广告花费 (Total Spend)</p>
-                <h3 className="text-2xl font-bold text-slate-900">$65,560</h3>
+                {Object.entries(totalSpend).map(([currency, amount]) => (
+                  <h3 key={currency} className="text-lg font-bold text-slate-900">
+                    {currency === 'USD' ? '$' : '฿'}{amount.toLocaleString()} {currency}
+                  </h3>
+                ))}
               </div>
               <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center">
                 <CreditCard className="w-6 h-6 text-rose-600" />
@@ -41,7 +59,11 @@ export default function UserAcquisition({ app, country, dateRange }: { app: stri
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-500 mb-1">总归因收入 (Total Revenue)</p>
-                <h3 className="text-2xl font-bold text-slate-900">$92,683</h3>
+                {Object.entries(totalRevenue).map(([currency, amount]) => (
+                  <h3 key={currency} className="text-lg font-bold text-slate-900">
+                    {currency === 'USD' ? '$' : '฿'}{amount.toLocaleString()} {currency}
+                  </h3>
+                ))}
               </div>
               <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center">
                 <DollarSign className="w-6 h-6 text-emerald-600" />
@@ -71,6 +93,32 @@ export default function UserAcquisition({ app, country, dateRange }: { app: stri
               </div>
               <div className="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center">
                 <Share2 className="w-6 h-6 text-amber-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500 mb-1">获客成本 (CPA)</p>
+                <h3 className="text-2xl font-bold text-slate-900">$2.05</h3>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-sky-600" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500 mb-1">销售成本 (CPS)</p>
+                <h3 className="text-2xl font-bold text-slate-900">$2.68</h3>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-violet-50 flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-violet-600" />
               </div>
             </div>
           </CardContent>
@@ -156,8 +204,8 @@ export default function UserAcquisition({ app, country, dateRange }: { app: stri
                           {row.type.split(' ')[0]}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-right text-slate-600 font-mono">{row.spend}</td>
-                      <td className="px-4 py-3 text-right text-slate-600 font-mono">{row.revenue}</td>
+                      <td className="px-4 py-3 text-right text-slate-600 font-mono">{formatCurrency(row.spend)}</td>
+                      <td className="px-4 py-3 text-right text-slate-600 font-mono">{formatCurrency(row.revenue)}</td>
                       <td className="px-4 py-3 text-right text-slate-600 font-mono">{row.installs}</td>
                       <td className="px-4 py-3 text-right font-bold text-slate-900">
                         <span className={parseInt(row.roas) > 100 ? 'text-emerald-600' : 'text-rose-600'}>

@@ -104,12 +104,11 @@ export default function PaymentFunnel({ app, country, dateRange }: { app: string
                       dataKey="rate" 
                       position="right" 
                       content={(props: any) => {
-                        const { x, y, width, height, value } = props;
-                        const entry = props.payload;
-                        if (!entry) return null;
+                        const { x, y, width, height, value, payload } = props;
+                        const entry = payload;
                         return (
                           <text x={x + width + 5} y={y + height / 2 + 4} fill="#334155" fontWeight="bold" fontSize={14}>
-                            {`${entry.count?.toLocaleString() ?? 0} (${value}%)`}
+                            {entry ? `${entry.count?.toLocaleString() ?? 0} (${value}%)` : `${value}%`}
                           </text>
                         );
                       }}

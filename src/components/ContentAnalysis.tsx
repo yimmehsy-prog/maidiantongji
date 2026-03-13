@@ -20,11 +20,11 @@ const topDramasData = [
 ];
 
 const templateRankingData = [
-  { id: 'TPL_1001', name: 'low_TT小程序 (drama_th_02)', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
-  { id: 'TPL_1002', name: 'high_AppStore (drama_us_01)', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
-  { id: 'TPL_1003', name: 'mid_GooglePlay (drama_id_03)', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
-  { id: 'TPL_1004', name: 'new_user_TT (drama_th_02)', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
-  { id: 'TPL_1005', name: 'vip_retention (drama_us_01)', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
+  { id: 'TPL_1001', name: 'low_TT小程序 (drama_th_02)', channel: '分销', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
+  { id: 'TPL_1002', name: 'high_AppStore (drama_us_01)', channel: '自营', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
+  { id: 'TPL_1003', name: 'mid_GooglePlay (drama_id_03)', channel: '自营', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
+  { id: 'TPL_1004', name: 'new_user_TT (drama_th_02)', channel: '分销', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
+  { id: 'TPL_1005', name: 'vip_retention (drama_us_01)', channel: '自营', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
 ];
 
 export default function ContentAnalysis({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
@@ -34,8 +34,8 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
         {/* SKU Sales Pie Chart */}
         <Card>
           <CardHeader>
-            <CardTitle>各套餐销量与销售额占比 (SKU Sales & Revenue)</CardTitle>
-            <CardDescription>按 sku_id 分组 (Grouped by sku_id)</CardDescription>
+            <CardTitle>各充值项销量与销售额占比 (Recharge Item Sales & Revenue)</CardTitle>
+            <CardDescription>包含订阅、金币及单剧购买 (Includes Subscriptions, Coins & Single Drama)</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[350px] w-full">
@@ -129,6 +129,7 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                   <tr>
                     <th className="px-4 py-3 rounded-tl-lg w-16">排名</th>
                     <th className="px-4 py-3">模版信息 (Template)</th>
+                    <th className="px-4 py-3">模板来源</th>
                     <th className="px-4 py-3 text-right">充值人数 (Users)</th>
                     <th className="px-4 py-3 text-right">销售额 (Revenue)</th>
                     <th className="px-4 py-3 rounded-tr-lg w-1/3">充值金额分布 (Amount Distribution)</th>
@@ -149,6 +150,11 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                       <td className="px-4 py-3">
                         <div className="font-medium text-slate-900">{tpl.name}</div>
                         <div className="text-xs text-slate-500 font-mono mt-0.5">{tpl.id}</div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${tpl.channel === '自营' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700'}`}>
+                          {tpl.channel}
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-right text-slate-600">{tpl.users.toLocaleString()}</td>
                       <td className="px-4 py-3 text-right font-bold text-emerald-600">${tpl.revenue.toLocaleString()}</td>

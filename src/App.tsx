@@ -4,11 +4,12 @@
  */
 
 import React, { useState } from 'react';
-import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe, Link2 } from 'lucide-react';
+import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe, Link2, FileText } from 'lucide-react';
 import PaymentFunnel from './components/PaymentFunnel';
 import ContentAnalysis from './components/ContentAnalysis';
 import PlaybackPerformance from './components/PlaybackPerformance';
 import UserAcquisition from './components/UserAcquisition';
+import PRD from './components/PRD';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('funnel');
@@ -39,15 +40,6 @@ export default function App() {
             支付转化漏斗
           </button>
           <button
-            onClick={() => setActiveTab('content')}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === 'content' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-            }`}
-          >
-            <PieChart className="w-4 h-4" />
-            剧集与 SKU 分析
-          </button>
-          <button
             onClick={() => setActiveTab('performance')}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
               activeTab === 'performance' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
@@ -64,6 +56,24 @@ export default function App() {
           >
             <Link2 className="w-4 h-4" />
             投流链路归因
+          </button>
+          <button
+            onClick={() => setActiveTab('content')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'content' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <PieChart className="w-4 h-4" />
+            剧集和充值分析
+          </button>
+          <button
+            onClick={() => setActiveTab('prd')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'prd' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            产品需求文档 (PRD)
           </button>
         </nav>
 
@@ -90,9 +100,10 @@ export default function App() {
         <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col xl:flex-row items-start xl:items-center justify-between shrink-0 gap-4">
           <h1 className="text-xl font-semibold text-slate-800 shrink-0">
             {activeTab === 'funnel' && '支付转化漏斗 (Payment Funnel)'}
-            {activeTab === 'content' && '剧集与 SKU 分析 (Content & SKU)'}
             {activeTab === 'performance' && '播放性能与转化 (Playback Performance)'}
             {activeTab === 'ua' && '投流链路归因 (User Acquisition)'}
+            {activeTab === 'content' && '剧集和充值分析 (Content & Recharge)'}
+            {activeTab === 'prd' && '产品需求文档 (PRD)'}
           </h1>
           
           <div className="flex flex-wrap items-center gap-3">
@@ -152,6 +163,7 @@ export default function App() {
           {activeTab === 'content' && <ContentAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
           {activeTab === 'performance' && <PlaybackPerformance app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
           {activeTab === 'ua' && <UserAcquisition app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
+          {activeTab === 'prd' && <PRD />}
         </div>
       </main>
     </div>
