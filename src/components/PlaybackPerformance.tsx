@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, ComposedChart, Legend, Cell } from 'recharts';
-import { Timer, AlertCircle, Zap, TrendingDown } from 'lucide-react';
+import { Timer, AlertCircle, Zap, TrendingDown, PlayCircle, Loader2, CheckCircle2, Activity, XCircle } from 'lucide-react';
 
 const loadTimeDistribution = [
   { bucket: '< 1s', users: 45000, dropRate: 1.2 },
@@ -147,6 +147,110 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                   ))}
                 </tbody>
               </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Playback Performance Tracking Plan */}
+        <Card className="col-span-1 lg:col-span-2">
+          <CardHeader>
+            <CardTitle>播放性能埋点方案 (Playback Performance Tracking Plan)</CardTitle>
+            <CardDescription>用于监控首帧加载、卡顿率、播放完成度及异常情况的标准埋点流程</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-8 mt-4">
+              <div className="relative">
+                {/* Vertical Line */}
+                <div className="absolute top-5 left-6 bottom-5 w-0.5 bg-slate-200"></div>
+                
+                <div className="space-y-8 relative">
+                  {/* Step 1 */}
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <PlayCircle className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">1. 单集触发播放 (Trigger Play)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_load_start</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">用户点击播放、上滑切换或自动连播触发时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">drama_id</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">episode_num</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">network_type</code></p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <Zap className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">2. 首帧渲染 (First Frame Rendered)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_first_frame</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">视频画面首次出现时上报，用于计算首帧加载耗时。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">load_duration_ms</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">is_cache</code></p>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <Loader2 className="w-5 h-5 text-amber-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">3. 播放卡顿 (Buffering)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_buffer_start</span>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_buffer_end</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">因网络原因导致播放停滞及恢复时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">buffer_duration_ms</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">current_play_time</code></p>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <Activity className="w-5 h-5 text-violet-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">4. 播放心跳 (Playback Heartbeat)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_heartbeat</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">播放过程中每隔 5 秒/10 秒上报一次，用于精确计算完播率和观看时长。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">current_play_time</code></p>
+                    </div>
+                  </div>
+
+                  {/* Step 5 */}
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <CheckCircle2 className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">5. 单集播放结束/划走 (Episode End)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_play_end</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">单集视频自然播放结束、用户上滑切换下一集或主动退出时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">watch_duration_ms</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">end_type (finish/swipe/quit)</code></p>
+                    </div>
+                  </div>
+
+                  {/* Error Step */}
+                  <div className="flex gap-4 mt-8">
+                    <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center shrink-0 z-10 border-4 border-white shadow-sm">
+                      <XCircle className="w-5 h-5 text-rose-600" />
+                    </div>
+                    <div className="pt-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-bold text-slate-900">异常: 播放报错 (Playback Error)</h4>
+                        <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-xs font-mono font-medium border border-rose-200">video_error</span>
+                      </div>
+                      <p className="text-sm text-slate-500 mt-1">播放器发生致命错误导致无法播放时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">error_code</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">error_msg</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">cdn_ip</code></p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

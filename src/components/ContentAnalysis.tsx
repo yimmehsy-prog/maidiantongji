@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { Trophy, TrendingUp, DollarSign } from 'lucide-react';
+import { Trophy, TrendingUp, DollarSign, PlayCircle } from 'lucide-react';
 
 const skuSalesData = [
   { name: '$9.99 (周卡)', value: 5040, revenue: 50349 },
@@ -12,11 +12,11 @@ const skuSalesData = [
 const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899'];
 
 const topDramasData = [
-  { id: 'D_10042', name: '霸道总裁爱上我 (Billionaire)', orders: 1250, revenue: 24500 },
-  { id: 'D_10089', name: '狼人家族 (Alpha Wolf)', orders: 980, revenue: 18200 },
-  { id: 'D_10102', name: '复仇千金 (Revenge)', orders: 850, revenue: 15600 },
-  { id: 'D_10015', name: '吸血鬼日记 (Vampire)', orders: 620, revenue: 11800 },
-  { id: 'D_10201', name: '闪婚蜜爱 (Flash Marriage)', orders: 450, revenue: 8900 },
+  { id: 'D_10042', name: '霸道总裁爱上我 (Billionaire)', orders: 1250, revenue: 24500, firstEpisodeCompletion: 85.4 },
+  { id: 'D_10089', name: '狼人家族 (Alpha Wolf)', orders: 980, revenue: 18200, firstEpisodeCompletion: 78.2 },
+  { id: 'D_10102', name: '复仇千金 (Revenge)', orders: 850, revenue: 15600, firstEpisodeCompletion: 81.5 },
+  { id: 'D_10015', name: '吸血鬼日记 (Vampire)', orders: 620, revenue: 11800, firstEpisodeCompletion: 72.8 },
+  { id: 'D_10201', name: '闪婚蜜爱 (Flash Marriage)', orders: 450, revenue: 8900, firstEpisodeCompletion: 68.9 },
 ];
 
 const templateRankingData = [
@@ -40,13 +40,13 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
           <CardContent>
             <div className="h-[350px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
+                <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
                   <Pie
                     data={skuSalesData}
                     cx="50%"
-                    cy="45%"
-                    innerRadius={80}
-                    outerRadius={120}
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
                     paddingAngle={2}
                     dataKey="revenue"
                     nameKey="name"
@@ -97,7 +97,12 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                   </div>
                   <div className="ml-4 flex-1 min-w-0">
                     <p className="text-sm font-semibold text-slate-900 truncate">{drama.name}</p>
-                    <p className="text-xs text-slate-500 font-mono mt-0.5">{drama.id}</p>
+                    <div className="flex items-center gap-3 mt-0.5">
+                      <p className="text-xs text-slate-500 font-mono">{drama.id}</p>
+                      <div className="flex items-center gap-1 text-[10px] font-medium text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                        <PlayCircle className="w-3 h-3" /> 首集完播: {drama.firstEpisodeCompletion}%
+                      </div>
+                    </div>
                   </div>
                   <div className="text-right ml-4">
                     <p className="text-sm font-bold text-emerald-600">${drama.revenue.toLocaleString()}</p>
@@ -107,40 +112,6 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                   </div>
                 </div>
               ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Drama Orders Bar Chart */}
-        <Card className="col-span-1 lg:col-span-2">
-          <CardHeader>
-            <CardTitle>头部剧集成单量对比 (Top Dramas Order Volume)</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px] w-full mt-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topDramasData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false} 
-                    tick={{ fill: '#64748b', fontSize: 12 }} 
-                    dy={10}
-                    tickFormatter={(val) => val.length > 8 ? val.substring(0, 8) + '...' : val}
-                  />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
-                  <Tooltip 
-                    cursor={{ fill: '#f1f5f9' }}
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                  />
-                  <Bar dataKey="orders" name="成单量 (Orders)" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={60}>
-                    {topDramasData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={index < 3 ? '#6366f1' : '#94a3b8'} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
