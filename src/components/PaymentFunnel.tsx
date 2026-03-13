@@ -103,8 +103,16 @@ export default function PaymentFunnel({ app, country, dateRange }: { app: string
                     <LabelList 
                       dataKey="rate" 
                       position="right" 
-                      formatter={(val: number) => `${val}%`} 
-                      style={{ fill: '#334155', fontWeight: 'bold', fontSize: 14 }}
+                      content={(props: any) => {
+                        const { x, y, width, height, value } = props;
+                        const entry = props.payload;
+                        if (!entry) return null;
+                        return (
+                          <text x={x + width + 5} y={y + height / 2 + 4} fill="#334155" fontWeight="bold" fontSize={14}>
+                            {`${entry.count?.toLocaleString() ?? 0} (${value}%)`}
+                          </text>
+                        );
+                      }}
                     />
                   </Bar>
                 </BarChart>

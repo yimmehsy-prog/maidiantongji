@@ -4,10 +4,11 @@
  */
 
 import React, { useState } from 'react';
-import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe } from 'lucide-react';
+import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe, Link2 } from 'lucide-react';
 import PaymentFunnel from './components/PaymentFunnel';
 import ContentAnalysis from './components/ContentAnalysis';
 import PlaybackPerformance from './components/PlaybackPerformance';
+import UserAcquisition from './components/UserAcquisition';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('funnel');
@@ -55,6 +56,15 @@ export default function App() {
             <Timer className="w-4 h-4" />
             播放性能与转化
           </button>
+          <button
+            onClick={() => setActiveTab('ua')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'ua' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <Link2 className="w-4 h-4" />
+            投流链路归因
+          </button>
         </nav>
 
         <div className="p-4 border-t border-slate-100">
@@ -77,14 +87,15 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Topbar / Filters */}
-        <header className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between shrink-0">
-          <h1 className="text-xl font-semibold text-slate-800">
+        <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col xl:flex-row items-start xl:items-center justify-between shrink-0 gap-4">
+          <h1 className="text-xl font-semibold text-slate-800 shrink-0">
             {activeTab === 'funnel' && '支付转化漏斗 (Payment Funnel)'}
             {activeTab === 'content' && '剧集与 SKU 分析 (Content & SKU)'}
             {activeTab === 'performance' && '播放性能与转化 (Playback Performance)'}
+            {activeTab === 'ua' && '投流链路归因 (User Acquisition)'}
           </h1>
           
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5">
               <Smartphone className="w-4 h-4 text-slate-500" />
               <select 
@@ -140,6 +151,7 @@ export default function App() {
           {activeTab === 'funnel' && <PaymentFunnel app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
           {activeTab === 'content' && <ContentAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
           {activeTab === 'performance' && <PlaybackPerformance app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
+          {activeTab === 'ua' && <UserAcquisition app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
         </div>
       </main>
     </div>
