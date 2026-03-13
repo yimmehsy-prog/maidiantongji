@@ -20,11 +20,11 @@ const topDramasData = [
 ];
 
 const templateRankingData = [
-  { id: 'TPL_1001', name: 'low_TT小程序 (Low-tier TT Mini Program)', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
-  { id: 'TPL_1002', name: 'high_AppStore (High-tier iOS)', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
-  { id: 'TPL_1003', name: 'mid_GooglePlay (Mid-tier Android)', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
-  { id: 'TPL_1004', name: 'new_user_TT (New User TT)', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
-  { id: 'TPL_1005', name: 'vip_retention (VIP Retention)', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
+  { id: 'TPL_1001', name: 'low_TT小程序 (drama_th_02)', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
+  { id: 'TPL_1002', name: 'high_AppStore (drama_us_01)', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
+  { id: 'TPL_1003', name: 'mid_GooglePlay (drama_id_03)', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
+  { id: 'TPL_1004', name: 'new_user_TT (drama_th_02)', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
+  { id: 'TPL_1005', name: 'vip_retention (drama_us_01)', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
 ];
 
 export default function ContentAnalysis({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {

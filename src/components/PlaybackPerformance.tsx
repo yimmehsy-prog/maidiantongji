@@ -217,7 +217,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                         <h4 className="text-base font-bold text-slate-900">4. 播放心跳 (Playback Heartbeat)</h4>
                         <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_heartbeat</span>
                       </div>
-                      <p className="text-sm text-slate-500 mt-1">播放过程中每隔 5 秒/10 秒上报一次，用于精确计算完播率和观看时长。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">current_play_time</code></p>
+                      <p className="text-sm text-slate-500 mt-1">播放过程中每隔 5 秒/10 秒上报一次，用于粗略统计在线人数和长时观看。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">current_play_time</code></p>
                     </div>
                   </div>
 
@@ -231,7 +231,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                         <h4 className="text-base font-bold text-slate-900">5. 单集播放结束/划走 (Episode End)</h4>
                         <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-mono font-medium border border-slate-200">video_play_end</span>
                       </div>
-                      <p className="text-sm text-slate-500 mt-1">单集视频自然播放结束、用户上滑切换下一集或主动退出时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">watch_duration_ms</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">end_type (finish/swipe/quit)</code></p>
+                      <p className="text-sm text-slate-500 mt-1">单集视频自然播放结束、用户上滑切换下一集或主动退出时上报。<strong className="text-slate-900">这是计算精确流失秒数（如1s, 2s）的唯一依据。</strong>参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">watch_duration_ms (精确到毫秒)</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">end_type (finish/swipe/quit)</code></p>
                     </div>
                   </div>
 
