@@ -1,0 +1,214 @@
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { Trophy, TrendingUp, DollarSign } from 'lucide-react';
+
+const skuSalesData = [
+  { name: '$9.99 (周卡)', value: 5040, revenue: 50349 },
+  { name: '$19.99 (月卡)', value: 1080, revenue: 21589 },
+  { name: '$49.99 (年卡)', value: 280, revenue: 13997 },
+];
+
+const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899'];
+
+const topDramasData = [
+  { id: 'D_10042', name: '霸道总裁爱上我 (Billionaire)', orders: 1250, revenue: 24500 },
+  { id: 'D_10089', name: '狼人家族 (Alpha Wolf)', orders: 980, revenue: 18200 },
+  { id: 'D_10102', name: '复仇千金 (Revenge)', orders: 850, revenue: 15600 },
+  { id: 'D_10015', name: '吸血鬼日记 (Vampire)', orders: 620, revenue: 11800 },
+  { id: 'D_10201', name: '闪婚蜜爱 (Flash Marriage)', orders: 450, revenue: 8900 },
+];
+
+const templateRankingData = [
+  { id: 'TPL_1001', name: 'low_TT小程序 (Low-tier TT Mini Program)', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
+  { id: 'TPL_1002', name: 'high_AppStore (High-tier iOS)', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
+  { id: 'TPL_1003', name: 'mid_GooglePlay (Mid-tier Android)', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
+  { id: 'TPL_1004', name: 'new_user_TT (New User TT)', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
+  { id: 'TPL_1005', name: 'vip_retention (VIP Retention)', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
+];
+
+export default function ContentAnalysis({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* SKU Sales Pie Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>各套餐销量与销售额占比 (SKU Sales & Revenue)</CardTitle>
+            <CardDescription>按 sku_id 分组 (Grouped by sku_id)</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[350px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={skuSalesData}
+                    cx="50%"
+                    cy="45%"
+                    innerRadius={80}
+                    outerRadius={120}
+                    paddingAngle={2}
+                    dataKey="revenue"
+                    nameKey="name"
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    labelLine={false}
+                  >
+                    {skuSalesData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    formatter={(value: number, name: string, props: any) => [
+                      `$${value.toLocaleString()} (${props.payload.value} 单)`,
+                      '销售额 (Revenue)'
+                    ]}
+                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Top Dramas Leaderboard */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>吸金短剧排行榜 (Top Grossing Dramas)</CardTitle>
+                <CardDescription>按 drama_id 分组成单量 (Orders grouped by drama_id)</CardDescription>
+              </div>
+              <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
+                <Trophy className="w-5 h-5" />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 mt-2">
+              {topDramasData.map((drama, index) => (
+                <div key={drama.id} className="flex items-center p-3 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0
+                    ${index === 0 ? 'bg-amber-100 text-amber-600' : 
+                      index === 1 ? 'bg-slate-200 text-slate-600' : 
+                      index === 2 ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}
+                  >
+                    {index + 1}
+                  </div>
+                  <div className="ml-4 flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">{drama.name}</p>
+                    <p className="text-xs text-slate-500 font-mono mt-0.5">{drama.id}</p>
+                  </div>
+                  <div className="text-right ml-4">
+                    <p className="text-sm font-bold text-emerald-600">${drama.revenue.toLocaleString()}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 flex items-center justify-end gap-1">
+                      <TrendingUp className="w-3 h-3" /> {drama.orders.toLocaleString()} 单
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Drama Orders Bar Chart */}
+        <Card className="col-span-1 lg:col-span-2">
+          <CardHeader>
+            <CardTitle>头部剧集成单量对比 (Top Dramas Order Volume)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px] w-full mt-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={topDramasData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis 
+                    dataKey="name" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tick={{ fill: '#64748b', fontSize: 12 }} 
+                    dy={10}
+                    tickFormatter={(val) => val.length > 8 ? val.substring(0, 8) + '...' : val}
+                  />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                  <Tooltip 
+                    cursor={{ fill: '#f1f5f9' }}
+                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  />
+                  <Bar dataKey="orders" name="成单量 (Orders)" fill="#6366f1" radius={[4, 4, 0, 0]} maxBarSize={60}>
+                    {topDramasData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index < 3 ? '#6366f1' : '#94a3b8'} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Recharge Template Ranking */}
+        <Card className="col-span-1 lg:col-span-2">
+          <CardHeader>
+            <CardTitle>充值模板销售额排行 (Recharge Template Ranking)</CardTitle>
+            <CardDescription>包含模版ID、名称、充值人数及金额分布 (Template ID, Name, Users, and Amount Distribution)</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="text-xs text-slate-500 uppercase bg-slate-50">
+                  <tr>
+                    <th className="px-4 py-3 rounded-tl-lg w-16">排名</th>
+                    <th className="px-4 py-3">模版信息 (Template)</th>
+                    <th className="px-4 py-3 text-right">充值人数 (Users)</th>
+                    <th className="px-4 py-3 text-right">销售额 (Revenue)</th>
+                    <th className="px-4 py-3 rounded-tr-lg w-1/3">充值金额分布 (Amount Distribution)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {templateRankingData.map((tpl, index) => (
+                    <tr key={tpl.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/50">
+                      <td className="px-4 py-3 font-medium text-slate-900">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
+                          ${index === 0 ? 'bg-amber-100 text-amber-600' : 
+                            index === 1 ? 'bg-slate-200 text-slate-600' : 
+                            index === 2 ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}
+                        >
+                          {index + 1}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="font-medium text-slate-900">{tpl.name}</div>
+                        <div className="text-xs text-slate-500 font-mono mt-0.5">{tpl.id}</div>
+                      </td>
+                      <td className="px-4 py-3 text-right text-slate-600">{tpl.users.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-right font-bold text-emerald-600">${tpl.revenue.toLocaleString()}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex h-2.5 w-full rounded-full overflow-hidden">
+                          {tpl.amounts.map((amt, i) => (
+                            <div 
+                              key={i} 
+                              style={{ width: `${amt.percent}%`, backgroundColor: COLORS[i % COLORS.length] }}
+                              className="h-full"
+                              title={`${amt.price}: ${amt.percent}%`}
+                            />
+                          ))}
+                        </div>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1.5 text-[10px] text-slate-500">
+                          {tpl.amounts.map((amt, i) => (
+                            <div key={i} className="flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }}></span>
+                              {amt.price} ({amt.percent}%)
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
