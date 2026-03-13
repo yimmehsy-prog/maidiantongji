@@ -71,7 +71,15 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-500 mb-1">播放前流失率 (Pre-play Drop-off)</p>
+                <p className="text-sm font-medium text-slate-500 mb-1 flex items-center gap-1">
+                  播放前流失率 (Pre-play Drop-off)
+                  <div className="group relative">
+                    <span className="text-slate-400 cursor-help">ⓘ</span>
+                    <div className="absolute left-0 bottom-full mb-2 hidden w-64 rounded-lg bg-slate-900 p-3 text-xs text-white shadow-lg group-hover:block z-10">
+                      计算公式: (触发播放但未成功渲染首帧的用户数 / 总触发播放用户数) * 100%
+                    </div>
+                  </div>
+                </p>
                 <h3 className="text-2xl font-bold text-slate-900">6.8%</h3>
                 <p className="text-xs text-rose-600 font-medium mt-1 flex items-center">
                   <TrendingDown className="w-3 h-3 mr-1" /> +1.2% vs last week
