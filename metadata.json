@@ -1,5 +1,5 @@
 {
-  "name": "DataMatrix V1",
-  "description": "Multi-App Matrix Analytics Dashboard (PRD V1.0)",
+  "name": "Drama数据分析中心",
+  "description": "Drama data analysis platform for user behavior, retention, and monetization metrics.",
   "requestFramePermissions": []
 }

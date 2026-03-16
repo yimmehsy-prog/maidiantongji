@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, AreaChart, Area, PieChart, Pie, Cell, LabelList } from 'recharts';
 import { UserPlus, UserCheck, Wallet, PlayCircle, TrendingUp, Repeat } from 'lucide-react';
 
 const dailyActiveData = [
@@ -183,8 +183,12 @@ export default function NewVsReturning({ app, country, dateRange, os }: any) {
                     cursor={{ fill: '#f8fafc' }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
-                  <Bar dataKey="new" name="新用户" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="returning" name="老用户" fill="#10b981" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar dataKey="new" name="新用户" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={40}>
+                    <LabelList dataKey="new" position="top" formatter={(val: number) => `${val}%`} style={{ fontSize: '10px', fill: '#64748b' }} />
+                  </Bar>
+                  <Bar dataKey="returning" name="老用户" fill="#10b981" radius={[4, 4, 0, 0]} maxBarSize={40}>
+                    <LabelList dataKey="returning" position="top" formatter={(val: number) => `${val}%`} style={{ fontSize: '10px', fill: '#64748b' }} />
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -214,8 +218,12 @@ export default function NewVsReturning({ app, country, dateRange, os }: any) {
                     cursor={{ fill: '#f8fafc' }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
-                  <Bar dataKey="new" name="新用户" fill="#60a5fa" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                  <Bar dataKey="returning" name="老用户" fill="#34d399" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                  <Bar dataKey="new" name="新用户" fill="#60a5fa" radius={[4, 4, 0, 0]} maxBarSize={40}>
+                    <LabelList dataKey="new" position="top" style={{ fontSize: '10px', fill: '#64748b' }} />
+                  </Bar>
+                  <Bar dataKey="returning" name="老用户" fill="#34d399" radius={[4, 4, 0, 0]} maxBarSize={40}>
+                    <LabelList dataKey="returning" position="top" style={{ fontSize: '10px', fill: '#64748b' }} />
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, ComposedChart, Legend, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, ComposedChart, Legend, Cell, LabelList } from 'recharts';
 import { Timer, AlertCircle, Zap, TrendingDown, PlayCircle, Loader2, CheckCircle2, Activity, XCircle, Bug, ShieldAlert, Power, RefreshCcw } from 'lucide-react';
 
 const loadTimeDistribution = [
@@ -17,7 +17,7 @@ const appPerformance = [
   { app: 'app_03', avgLoadTime: 3.5, p90LoadTime: 6.8, dropRate: 18.2, crashRate: 1.24 },
 ];
 
-export default function PlaybackPerformance({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+export default function PlaybackPerformance({ app, country, dateRange, os }: { app: string, country: string, dateRange: string, os: string }) {
   return (
     <div className="space-y-6">
       {/* Alert */}
@@ -71,7 +71,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-500 mb-1 flex items-center gap-1">
+                <div className="text-sm font-medium text-slate-500 mb-1 flex items-center gap-1">
                   播放前流失率
                   <div className="group relative">
                     <span className="text-slate-400 cursor-help">ⓘ</span>
@@ -79,7 +79,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                       计算公式: (触发播放但未成功渲染首帧的用户数 / 总触发播放用户数) * 100%
                     </div>
                   </div>
-                </p>
+                </div>
                 <h3 className="text-2xl font-bold text-slate-900">6.8%</h3>
                 <p className="text-xs text-rose-600 font-medium mt-1 flex items-center">
                   <TrendingDown className="w-3 h-3 mr-1" /> +1.2% vs last week
@@ -96,7 +96,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-500 mb-1 flex items-center gap-1">
+                <div className="text-sm font-medium text-slate-500 mb-1 flex items-center gap-1">
                   应用崩溃率
                   <div className="group relative">
                     <span className="text-slate-400 cursor-help">ⓘ</span>
@@ -104,7 +104,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                       计算公式: (发生崩溃的启动次数 / 总启动次数) * 100%
                     </div>
                   </div>
-                </p>
+                </div>
                 <h3 className="text-2xl font-bold text-slate-900">0.45%</h3>
                 <p className="text-xs text-emerald-600 font-medium mt-1 flex items-center">
                   <TrendingDown className="w-3 h-3 mr-1" /> -0.05% vs last week
@@ -137,7 +137,9 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
                   <Legend wrapperStyle={{ paddingTop: '20px' }} />
-                  <Bar yAxisId="left" dataKey="users" name="触发播放用户数" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={60} />
+                  <Bar yAxisId="left" dataKey="users" name="触发播放用户数" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={60}>
+                    <LabelList dataKey="users" position="top" formatter={(val: number) => `${(val / 1000).toFixed(1)}k`} style={{ fontSize: '10px', fill: '#64748b' }} />
+                  </Bar>
                   <Line yAxisId="right" type="monotone" dataKey="dropRate" name="流失率 (%)" stroke="#ef4444" strokeWidth={3} dot={{ r: 6, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 8 }} />
                 </ComposedChart>
               </ResponsiveContainer>
@@ -330,7 +332,7 @@ export default function PlaybackPerformance({ app, country, dateRange }: { app: 
                         <h4 className="text-base font-bold text-slate-900">2. 捕获到崩溃</h4>
                         <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-xs font-mono font-medium border border-rose-200">app_crash</span>
                       </div>
-                      <p className="text-sm text-slate-500 mt-1">捕获到 Native 层 (C/C++) 或 Framework 层 (Java/Swift) 致命崩溃时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">crash_type (java/native/oom)</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">stack_trace</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">free_memory</code></p>
+                      <p className="text-sm text-slate-500 mt-1">捕获到 Native 层 (C/C++) 或 Framework 层 (Java/Swift) 致命崩溃时上报。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">crash_type (java/native/oom)</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">stack_trace</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">free_memory</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">user_id</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">app_version</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">device_info</code></p>
                     </div>
                   </div>
 

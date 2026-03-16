@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, LabelList } from 'recharts';
 import { Users, CalendarDays, TrendingUp, Target } from 'lucide-react';
 
 const retentionCurveData = [
@@ -103,7 +103,9 @@ export default function RetentionAnalysis({ app, country, dateRange, os }: any) 
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   formatter={(value: number) => [`${value.toFixed(1)}%`, '留存率']}
                 />
-                <Line type="monotone" dataKey="rate" name="平均留存率" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6 }} />
+                <Line type="monotone" dataKey="rate" name="平均留存率" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6 }}>
+                  <LabelList dataKey="rate" position="top" formatter={(val: number) => `${val}%`} style={{ fontSize: '12px', fill: '#4f46e5' }} />
+                </Line>
               </LineChart>
             </ResponsiveContainer>
           </div>

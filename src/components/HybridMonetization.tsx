@@ -22,7 +22,7 @@ const adPerformanceData = [
   { date: '03-07', impressions: 1680000, ecpm: 10.4, penetration: 51 },
 ];
 
-export default function HybridMonetization({ app, country, dateRange, os }: any) {
+export default function HybridMonetization({ app, country, dateRange, os }: { app: string, country: string, dateRange: string, os: string }) {
   return (
     <div className="space-y-6">
       {/* Key Metrics */}

@@ -46,7 +46,7 @@ const channelDataByCountry: Record<string, any[]> = {
   ]
 };
 
-export default function UserAcquisition({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+export default function UserAcquisition({ app, country, dateRange, os }: { app: string, country: string, dateRange: string, os: string }) {
   const [localCountry, setLocalCountry] = useState('all');
 
   const formatCurrency = (val: { amount: number, currency: string }) => {

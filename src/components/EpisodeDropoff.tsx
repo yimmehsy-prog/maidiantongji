@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line, ReferenceLine, ComposedChart, PieChart, Pie, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line, ReferenceLine, ComposedChart, PieChart, Pie, Legend, LabelList } from 'recharts';
 import { PlaySquare, AlertTriangle, Lock, Unlock, TrendingDown, Clock, Filter, SplitSquareHorizontal } from 'lucide-react';
 
 // 模拟单剧各集播放与流失数据
@@ -183,6 +183,7 @@ export default function EpisodeDropoff({ app, country, dateRange, os }: any) {
                       {episodeDropoffData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.isPaywall ? '#ef4444' : '#3b82f6'} />
                       ))}
+                      <LabelList dataKey="views" position="top" formatter={(val: number) => `${(val / 1000).toFixed(1)}k`} style={{ fontSize: '10px', fill: '#64748b' }} />
                     </Bar>
                     <Line yAxisId="right" type="monotone" dataKey="dropRate" name="流失率" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6 }} />
                   </ComposedChart>

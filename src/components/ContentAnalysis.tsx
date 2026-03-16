@@ -27,7 +27,7 @@ const templateRankingData = [
   { id: 'TPL_1005', name: 'vip_retention (应用01)', channel: '自营', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
 ];
 
-export default function ContentAnalysis({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+export default function ContentAnalysis({ app, country, dateRange, os }: { app: string, country: string, dateRange: string, os: string }) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

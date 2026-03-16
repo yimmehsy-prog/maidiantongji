@@ -7,9 +7,10 @@ interface UserAnalysisProps {
   app: string;
   country: string;
   dateRange: string;
+  os: string;
 }
 
-export default function UserAnalysis({ app, country, dateRange }: UserAnalysisProps) {
+export default function UserAnalysis({ app, country, dateRange, os }: UserAnalysisProps) {
   // Mock data generation based on props
   const dauData = useMemo(() => {
     const data = [];

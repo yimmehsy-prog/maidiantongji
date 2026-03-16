@@ -48,7 +48,7 @@ const dropOffReasons = [
   { reason: '支付网关错误', users: 160, events: 180, percentage: 4.8, color: '#8b5cf6' },
 ];
 
-export default function PaymentFunnel({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
+export default function PaymentFunnel({ app, country, dateRange, os }: { app: string, country: string, dateRange: string, os: string }) {
   return (
     <div className="space-y-6">
       {/* Alert */}
