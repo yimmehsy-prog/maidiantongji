@@ -12,19 +12,19 @@ const skuSalesData = [
 const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899'];
 
 const topDramasData = [
-  { id: 'D_10042', name: '霸道总裁爱上我 (Billionaire)', orders: 1250, revenue: 24500, firstEpisodeCompletion: 85.4 },
-  { id: 'D_10089', name: '狼人家族 (Alpha Wolf)', orders: 980, revenue: 18200, firstEpisodeCompletion: 78.2 },
-  { id: 'D_10102', name: '复仇千金 (Revenge)', orders: 850, revenue: 15600, firstEpisodeCompletion: 81.5 },
-  { id: 'D_10015', name: '吸血鬼日记 (Vampire)', orders: 620, revenue: 11800, firstEpisodeCompletion: 72.8 },
-  { id: 'D_10201', name: '闪婚蜜爱 (Flash Marriage)', orders: 450, revenue: 8900, firstEpisodeCompletion: 68.9 },
+  { id: 'D_10042', name: '霸道总裁爱上我', orders: 1250, revenue: 24500, firstEpisodeCompletion: 85.4 },
+  { id: 'D_10089', name: '狼人家族', orders: 980, revenue: 18200, firstEpisodeCompletion: 78.2 },
+  { id: 'D_10102', name: '复仇千金', orders: 850, revenue: 15600, firstEpisodeCompletion: 81.5 },
+  { id: 'D_10015', name: '吸血鬼日记', orders: 620, revenue: 11800, firstEpisodeCompletion: 72.8 },
+  { id: 'D_10201', name: '闪婚蜜爱', orders: 450, revenue: 8900, firstEpisodeCompletion: 68.9 },
 ];
 
 const templateRankingData = [
-  { id: 'TPL_1001', name: 'low_TT小程序 (drama_th_02)', channel: '分销', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
-  { id: 'TPL_1002', name: 'high_AppStore (drama_us_01)', channel: '自营', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
-  { id: 'TPL_1003', name: 'mid_GooglePlay (drama_id_03)', channel: '自营', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
-  { id: 'TPL_1004', name: 'new_user_TT (drama_th_02)', channel: '分销', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
-  { id: 'TPL_1005', name: 'vip_retention (drama_us_01)', channel: '自营', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
+  { id: 'TPL_1001', name: 'low_TT小程序 (应用02)', channel: '分销', users: 25200, revenue: 351848, amounts: [{ price: '$9.99', percent: 55 }, { price: '$19.99', percent: 35 }, { price: '$24.99', percent: 10 }] },
+  { id: 'TPL_1002', name: 'high_AppStore (应用01)', channel: '自营', users: 18900, revenue: 566911, amounts: [{ price: '$24.99', percent: 40 }, { price: '$49.99', percent: 45 }, { price: '$99.99', percent: 15 }] },
+  { id: 'TPL_1003', name: 'mid_GooglePlay (应用03)', channel: '自营', users: 16500, revenue: 294935, amounts: [{ price: '$9.99', percent: 45 }, { price: '$19.99', percent: 40 }, { price: '$24.99', percent: 15 }] },
+  { id: 'TPL_1004', name: 'new_user_TT (应用02)', channel: '分销', users: 14200, revenue: 183958, amounts: [{ price: '$4.99', percent: 70 }, { price: '$9.99', percent: 30 }] },
+  { id: 'TPL_1005', name: 'vip_retention (应用01)', channel: '自营', users: 8100, revenue: 202419, amounts: [{ price: '$24.99', percent: 85 }, { price: '$49.99', percent: 15 }] },
 ];
 
 export default function ContentAnalysis({ app, country, dateRange }: { app: string, country: string, dateRange: string }) {
@@ -34,8 +34,8 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
         {/* SKU Sales Pie Chart */}
         <Card>
           <CardHeader>
-            <CardTitle>各充值项销量与销售额占比 (Recharge Item Sales & Revenue)</CardTitle>
-            <CardDescription>包含订阅、金币及单剧购买 (Includes Subscriptions, Coins & Single Drama)</CardDescription>
+            <CardTitle>各充值项销量与销售额占比</CardTitle>
+            <CardDescription>包含订阅、金币及单剧购买</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[350px] w-full">
@@ -60,7 +60,7 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                   <Tooltip 
                     formatter={(value: number, name: string, props: any) => [
                       `$${value.toLocaleString()} (${props.payload.value} 单)`,
-                      '销售额 (Revenue)'
+                      '销售额'
                     ]}
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
@@ -76,8 +76,8 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>吸金短剧排行榜 (Top Grossing Dramas)</CardTitle>
-                <CardDescription>按 drama_id 分组成单量 (Orders grouped by drama_id)</CardDescription>
+                <CardTitle>吸金短剧排行榜</CardTitle>
+                <CardDescription>按 drama_id 分组成单量</CardDescription>
               </div>
               <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-amber-600">
                 <Trophy className="w-5 h-5" />
@@ -119,8 +119,8 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
         {/* Recharge Template Ranking */}
         <Card className="col-span-1 lg:col-span-2">
           <CardHeader>
-            <CardTitle>充值模板销售额排行 (Recharge Template Ranking)</CardTitle>
-            <CardDescription>包含模版ID、名称、充值人数及金额分布 (Template ID, Name, Users, and Amount Distribution)</CardDescription>
+            <CardTitle>充值模板销售额排行</CardTitle>
+            <CardDescription>包含模版ID、名称、充值人数及金额分布</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -128,11 +128,11 @@ export default function ContentAnalysis({ app, country, dateRange }: { app: stri
                 <thead className="text-xs text-slate-500 uppercase bg-slate-50">
                   <tr>
                     <th className="px-4 py-3 rounded-tl-lg w-16">排名</th>
-                    <th className="px-4 py-3">模版信息 (Template)</th>
+                    <th className="px-4 py-3">模版信息</th>
                     <th className="px-4 py-3">模板来源</th>
-                    <th className="px-4 py-3 text-right">充值人数 (Users)</th>
-                    <th className="px-4 py-3 text-right">销售额 (Revenue)</th>
-                    <th className="px-4 py-3 rounded-tr-lg w-1/3">充值金额分布 (Amount Distribution)</th>
+                    <th className="px-4 py-3 text-right">充值人数</th>
+                    <th className="px-4 py-3 text-right">销售额</th>
+                    <th className="px-4 py-3 rounded-tr-lg w-1/3">充值金额分布</th>
                   </tr>
                 </thead>
                 <tbody>

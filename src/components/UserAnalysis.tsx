@@ -70,7 +70,7 @@ export default function UserAnalysis({ app, country, dateRange }: UserAnalysisPr
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-sm text-slate-500 font-medium">总活跃用户 (DAU)</p>
+              <p className="text-sm text-slate-500 font-medium">总活跃用户</p>
               <h3 className="text-2xl font-bold text-slate-800">124,500</h3>
             </div>
           </CardContent>
@@ -81,7 +81,7 @@ export default function UserAnalysis({ app, country, dateRange }: UserAnalysisPr
               <Percent className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-sm text-slate-500 font-medium">付费意愿率 (Payment Intent)</p>
+              <p className="text-sm text-slate-500 font-medium">付费意愿率</p>
               <h3 className="text-2xl font-bold text-slate-800">45.2%</h3>
               <p className="text-xs text-slate-400 mt-1">触发付费弹窗/DAU</p>
             </div>
@@ -137,7 +137,7 @@ export default function UserAnalysis({ app, country, dateRange }: UserAnalysisPr
               <AlertTriangle className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-sm text-red-600 font-medium">高净值流失预警 (Whale Churn)</p>
+              <p className="text-sm text-red-600 font-medium">高净值流失预警</p>
               <h3 className="text-2xl font-bold text-red-700">850</h3>
               <p className="text-xs text-red-500 mt-1">累计付费 &gt; $50 且 48h 未活跃</p>
             </div>
@@ -149,7 +149,7 @@ export default function UserAnalysis({ app, country, dateRange }: UserAnalysisPr
         {/* DAU Trend */}
         <Card className="col-span-1 lg:col-span-2">
           <CardHeader>
-            <CardTitle>各国每日活跃用户趋势 (DAU Trend)</CardTitle>
+            <CardTitle>各国每日活跃用户趋势</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-80">
@@ -239,31 +239,31 @@ export default function UserAnalysis({ app, country, dateRange }: UserAnalysisPr
       {/* Actionable Segments Table */}
       <Card>
         <CardHeader>
-          <CardTitle>自动化分群规则与运营动作 (Actionable Segments)</CardTitle>
+          <CardTitle>自动化分群规则与运营动作</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-slate-500 bg-slate-50 uppercase border-b border-slate-200">
                 <tr>
-                  <th className="px-6 py-3 font-medium">用户池 (Segment)</th>
-                  <th className="px-6 py-3 font-medium">细化定义/规则 (Rule)</th>
-                  <th className="px-6 py-3 font-medium">运营动作 (Action)</th>
+                  <th className="px-6 py-3 font-medium">用户池</th>
+                  <th className="px-6 py-3 font-medium">细化定义/规则</th>
+                  <th className="px-6 py-3 font-medium">运营动作</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 <tr className="hover:bg-slate-50/50">
-                  <td className="px-6 py-4 font-medium text-indigo-600">高价值区 (High Value)</td>
+                  <td className="px-6 py-4 font-medium text-indigo-600">高价值区</td>
                   <td className="px-6 py-4 text-slate-600">已付费且今日活跃，余额 &lt; 50 豆。</td>
                   <td className="px-6 py-4 text-slate-800">触发<strong>“续充优惠”</strong>，防止断更流失；<strong>首页周卡月卡限时促销提醒</strong>。</td>
                 </tr>
                 <tr className="hover:bg-slate-50/50">
-                  <td className="px-6 py-4 font-medium text-emerald-600">高潜转化区 (High Potential)</td>
+                  <td className="px-6 py-4 font-medium text-emerald-600">高潜转化区</td>
                   <td className="px-6 py-4 text-slate-600">留存 &gt; 3 天未付费，但累计观看 &gt; 20 集。</td>
                   <td className="px-6 py-4 text-slate-800">此时不该给豆子，应给<strong>“首充 $0.99 特惠”</strong>破冰。</td>
                 </tr>
                 <tr className="hover:bg-slate-50/50">
-                  <td className="px-6 py-4 font-medium text-amber-600">签到活跃区 (Check-in Actives)</td>
+                  <td className="px-6 py-4 font-medium text-amber-600">签到活跃区</td>
                   <td className="px-6 py-4 text-slate-600">留存 &gt; 3 天未付费，且连续签到 &gt; 3 天。</td>
                   <td className="px-6 py-4 text-slate-800">在签到成功弹窗中植入<strong>首充特惠</strong>，或引导其分享 App 换豆。</td>
                 </tr>

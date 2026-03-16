@@ -27,7 +27,7 @@ export default function App() {
             <Activity className="w-6 h-6" />
             <span>DataMatrix V1</span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">Multi-App Analytics Hub</p>
+          <p className="text-xs text-slate-500 mt-1">多应用数据分析中心</p>
         </div>
         
         <nav className="flex-1 p-4 space-y-1">
@@ -38,7 +38,7 @@ export default function App() {
             }`}
           >
             <FileText className="w-4 h-4" />
-            产品需求文档 (PRD)
+            产品需求文档
           </button>
           <button
             onClick={() => setActiveTab('users')}
@@ -109,12 +109,12 @@ export default function App() {
         {/* Topbar / Filters */}
         <header className="bg-white border-b border-slate-200 px-8 py-4 flex flex-col xl:flex-row items-start xl:items-center justify-between shrink-0 gap-4">
           <h1 className="text-xl font-semibold text-slate-800 shrink-0">
-            {activeTab === 'funnel' && '支付转化漏斗 (Payment Funnel)'}
-            {activeTab === 'performance' && '播放性能与转化 (Playback Performance)'}
-            {activeTab === 'ua' && '投流链路归因 (User Acquisition)'}
-            {activeTab === 'content' && '剧集和充值分析 (Content & Recharge)'}
-            {activeTab === 'prd' && '产品需求文档 (PRD)'}
-            {activeTab === 'users' && '用户分析 (User Analysis)'}
+            {activeTab === 'funnel' && '支付转化漏斗'}
+            {activeTab === 'performance' && '播放性能与转化'}
+            {activeTab === 'ua' && '投流链路归因'}
+            {activeTab === 'content' && '剧集和充值分析'}
+            {activeTab === 'prd' && '产品需求文档'}
+            {activeTab === 'users' && '用户分析'}
           </h1>
           
           <div className="flex flex-wrap items-center gap-3">
@@ -125,10 +125,10 @@ export default function App() {
                 value={selectedApp}
                 onChange={(e) => setSelectedApp(e.target.value)}
               >
-                <option value="all">所有 App (All Apps)</option>
-                <option value="drama_us_01">drama_us_01</option>
-                <option value="drama_th_02">drama_th_02</option>
-                <option value="drama_id_03">drama_id_03</option>
+                <option value="all">所有 App</option>
+                <option value="app_01">应用01</option>
+                <option value="app_02">应用02</option>
+                <option value="app_03">应用03</option>
               </select>
             </div>
 
@@ -139,11 +139,11 @@ export default function App() {
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
               >
-                <option value="all">所有国家 (All Countries)</option>
-                <option value="US">美国 (US)</option>
-                <option value="TH">泰国 (TH)</option>
-                <option value="ID">印尼 (ID)</option>
-                <option value="UK">英国 (UK)</option>
+                <option value="all">所有国家</option>
+                <option value="US">美国</option>
+                <option value="TH">泰国</option>
+                <option value="ID">印尼</option>
+                <option value="UK">英国</option>
               </select>
             </div>
 
@@ -154,10 +154,10 @@ export default function App() {
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
               >
-                <option value="today">今日 (Today)</option>
-                <option value="yesterday">昨日 (Yesterday)</option>
-                <option value="7d">近 7 天 (Last 7 Days)</option>
-                <option value="30d">近 30 天 (Last 30 Days)</option>
+                <option value="today">今日</option>
+                <option value="yesterday">昨日</option>
+                <option value="7d">近 7 天</option>
+                <option value="30d">近 30 天</option>
               </select>
             </div>
             
