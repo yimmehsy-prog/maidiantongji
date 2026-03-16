@@ -6,12 +6,12 @@ export default function PRD() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>DataMatrix V1 产品需求文档</CardTitle>
+          <CardTitle>数据模块说明</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <section>
             <h3 className="font-semibold text-lg">1. 项目概述</h3>
-            <p className="text-sm text-slate-600">DataMatrix V1 是一个多应用数据分析中心，旨在为运营团队提供各应用的核心运营指标监控与分析，支持多维度筛选（App、国家、时间范围）。</p>
+            <p className="text-sm text-slate-600">Drama数据分析中心 是一个多应用数据分析中心，旨在为运营团队提供各应用的核心运营指标监控与分析，支持多维度筛选（App、国家、时间范围）。</p>
           </section>
 
           <section>

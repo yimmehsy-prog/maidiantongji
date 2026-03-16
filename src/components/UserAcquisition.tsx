@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
-import { Facebook, Smartphone, Download, PlayCircle, Link2, AlertCircle, TrendingUp, DollarSign, CreditCard, Share2, PieChart } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList, LineChart, Line, ReferenceLine } from 'recharts';
+import { Facebook, Smartphone, Download, PlayCircle, Link2, AlertCircle, TrendingUp, DollarSign, CreditCard, Share2, PieChart, Info } from 'lucide-react';
 
 const funnelData = [
   { step: '落地页访问', users: 150000, rate: 100 },
   { step: '点击下载', users: 85000, rate: 56.6 },
   { step: '应用激活', users: 32000, rate: 21.3 },
   { step: '剧集播放', users: 24500, rate: 16.3 },
+];
+
+const ltvRoiData = [
+  { day: 'Day 1', ltv: 0.85, roi: 41.5 },
+  { day: 'Day 3', ltv: 1.25, roi: 61.0 },
+  { day: 'Day 7', ltv: 1.85, roi: 90.2 },
+  { day: 'Day 14', ltv: 2.40, roi: 117.0 },
+  { day: 'Day 30', ltv: 3.15, roi: 153.6 },
+  { day: 'Day 60', ltv: 3.80, roi: 185.3 },
+  { day: 'Day 90', ltv: 4.20, roi: 204.8 },
 ];
 
 const channelDataByCountry: Record<string, any[]> = {
@@ -278,6 +288,79 @@ export default function UserAcquisition({ app, country, dateRange }: { app: stri
         </Card>
       </div>
 
+      {/* LTV & ROI Tracking */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <CardTitle className="text-lg">LTV (生命周期价值) 曲线</CardTitle>
+              <div className="group relative">
+                <Info className="w-4 h-4 text-slate-400 cursor-help" />
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-slate-800 text-white text-xs rounded shadow-lg z-50">
+                  <p className="font-semibold mb-1">计算公式：</p>
+                  <p>Day N LTV = (某批次用户在注册后 N 天内产生的总收入) ÷ (该批次的总新增用户数)</p>
+                  <p className="mt-1 text-slate-300">* 总收入包含 IAP(内购) + IAA(广告变现)</p>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800"></div>
+                </div>
+              </div>
+            </div>
+            <CardDescription>同批次用户在不同生命周期的累计贡献价值 (USD)</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px] w-full mt-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={ltvRoiData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `$${val}`} />
+                  <Tooltip 
+                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                    formatter={(value: number) => [`$${value.toFixed(2)}`, 'LTV']}
+                  />
+                  <Line type="monotone" dataKey="ltv" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <CardTitle className="text-lg">ROI (投资回报率) 曲线</CardTitle>
+              <div className="group relative">
+                <Info className="w-4 h-4 text-slate-400 cursor-help" />
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block w-64 p-2 bg-slate-800 text-white text-xs rounded shadow-lg z-50">
+                  <p className="font-semibold mb-1">计算公式：</p>
+                  <p>Day N ROI = (Day N LTV ÷ CPI) × 100%</p>
+                  <p className="mt-1 text-slate-300">* CPI = 单个用户的平均获客成本</p>
+                  <p className="mt-1 text-slate-300">* 当曲线穿过 100% 虚线时，代表该批次用户已收回买量成本</p>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800"></div>
+                </div>
+              </div>
+            </div>
+            <CardDescription>基于平均获客成本 ($2.05) 的累计回报率</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px] w-full mt-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={ltvRoiData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(val) => `${val}%`} />
+                  <Tooltip 
+                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                    formatter={(value: number) => [`${value.toFixed(1)}%`, 'ROI']}
+                  />
+                  <ReferenceLine y={100} stroke="#ef4444" strokeDasharray="3 3" label={{ position: 'top', value: '回本线 (100%)', fill: '#ef4444', fontSize: 12 }} />
+                  <Line type="monotone" dataKey="roi" stroke="#10b981" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} activeDot={{ r: 6 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* UA Tracking Plan */}
       <Card className="col-span-1 lg:col-span-2">
         <CardHeader>
@@ -370,8 +453,44 @@ export default function UserAcquisition({ app, country, dateRange }: { app: stri
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="text-base font-bold text-slate-900">异常: 归因失败/匹配失败</h4>
                       <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-xs font-mono font-medium border border-rose-200">deeplink_failed</span>
+                      <span className="ml-2 px-2 py-0.5 rounded bg-rose-600 text-white text-xs font-bold shadow-sm">
+                        失败率: 18.5%
+                      </span>
                     </div>
                     <p className="text-sm text-slate-500 mt-1">用户通过广告下载 App，但未能成功跳转到目标短剧（如剪切板被清空、归因 SDK 延迟过高）。参数：<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">fail_reason</code>, <code className="text-xs bg-slate-100 px-1 py-0.5 rounded">device_info</code></p>
+                    <div className="mt-3 bg-rose-50 border border-rose-100 rounded-lg p-3">
+                      <p className="text-xs text-rose-700 font-medium mb-2">主要失败原因分布：</p>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center text-xs">
+                          <span className="w-32 text-slate-600">剪切板数据丢失</span>
+                          <div className="flex-1 h-2 bg-rose-100 rounded-full overflow-hidden mx-2">
+                            <div className="h-full bg-rose-500 rounded-full" style={{ width: '45%' }}></div>
+                          </div>
+                          <span className="text-slate-700 font-medium w-8 text-right">45%</span>
+                        </div>
+                        <div className="flex items-center text-xs">
+                          <span className="w-32 text-slate-600">归因 SDK 延迟超时</span>
+                          <div className="flex-1 h-2 bg-rose-100 rounded-full overflow-hidden mx-2">
+                            <div className="h-full bg-rose-400 rounded-full" style={{ width: '32%' }}></div>
+                          </div>
+                          <span className="text-slate-700 font-medium w-8 text-right">32%</span>
+                        </div>
+                        <div className="flex items-center text-xs">
+                          <span className="w-32 text-slate-600">网络请求失败</span>
+                          <div className="flex-1 h-2 bg-rose-100 rounded-full overflow-hidden mx-2">
+                            <div className="h-full bg-rose-300 rounded-full" style={{ width: '15%' }}></div>
+                          </div>
+                          <span className="text-slate-700 font-medium w-8 text-right">15%</span>
+                        </div>
+                        <div className="flex items-center text-xs">
+                          <span className="w-32 text-slate-600">其他未知错误</span>
+                          <div className="flex-1 h-2 bg-rose-100 rounded-full overflow-hidden mx-2">
+                            <div className="h-full bg-rose-200 rounded-full" style={{ width: '8%' }}></div>
+                          </div>
+                          <span className="text-slate-700 font-medium w-8 text-right">8%</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

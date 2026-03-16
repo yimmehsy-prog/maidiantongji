@@ -4,18 +4,23 @@
  */
 
 import React, { useState } from 'react';
-import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe, Link2, FileText, Users } from 'lucide-react';
+import { Filter, Calendar, Smartphone, Activity, BarChart3, PieChart, Layers, Timer, Globe, Link2, FileText, Users, Monitor, CircleDollarSign, CalendarDays, UserPlus, ListVideo } from 'lucide-react';
 import PaymentFunnel from './components/PaymentFunnel';
 import ContentAnalysis from './components/ContentAnalysis';
 import PlaybackPerformance from './components/PlaybackPerformance';
 import UserAcquisition from './components/UserAcquisition';
 import PRD from './components/PRD';
 import UserAnalysis from './components/UserAnalysis';
+import HybridMonetization from './components/HybridMonetization';
+import RetentionAnalysis from './components/RetentionAnalysis';
+import NewVsReturning from './components/NewVsReturning';
+import EpisodeDropoff from './components/EpisodeDropoff';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('prd');
   const [selectedApp, setSelectedApp] = useState('all');
   const [selectedCountry, setSelectedCountry] = useState('all');
+  const [selectedOS, setSelectedOS] = useState('all');
   const [dateRange, setDateRange] = useState('7d');
 
   return (
@@ -25,7 +30,7 @@ export default function App() {
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-2 text-indigo-600 font-bold text-xl tracking-tight">
             <Activity className="w-6 h-6" />
-            <span>DataMatrix V1</span>
+            <span>Drama数据分析中心</span>
           </div>
           <p className="text-xs text-slate-500 mt-1">多应用数据分析中心</p>
         </div>
@@ -38,7 +43,7 @@ export default function App() {
             }`}
           >
             <FileText className="w-4 h-4" />
-            产品需求文档
+            数据模块说明
           </button>
           <button
             onClick={() => setActiveTab('users')}
@@ -48,6 +53,24 @@ export default function App() {
           >
             <Users className="w-4 h-4" />
             用户分析
+          </button>
+          <button
+            onClick={() => setActiveTab('new_returning')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'new_returning' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <UserPlus className="w-4 h-4" />
+            新老用户对比
+          </button>
+          <button
+            onClick={() => setActiveTab('retention')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'retention' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <CalendarDays className="w-4 h-4" />
+            留存分析
           </button>
           <button
             onClick={() => setActiveTab('funnel')}
@@ -85,6 +108,24 @@ export default function App() {
             <PieChart className="w-4 h-4" />
             剧集和充值分析
           </button>
+          <button
+            onClick={() => setActiveTab('episode_dropoff')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'episode_dropoff' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <ListVideo className="w-4 h-4" />
+            单剧流失与付费墙
+          </button>
+          <button
+            onClick={() => setActiveTab('monetization')}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === 'monetization' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+          >
+            <CircleDollarSign className="w-4 h-4" />
+            混合变现 (IAA+IAP)
+          </button>
         </nav>
 
         <div className="p-4 border-t border-slate-100">
@@ -113,7 +154,11 @@ export default function App() {
             {activeTab === 'performance' && '播放性能与转化'}
             {activeTab === 'ua' && '投流链路归因'}
             {activeTab === 'content' && '剧集和充值分析'}
-            {activeTab === 'prd' && '产品需求文档'}
+            {activeTab === 'episode_dropoff' && '单剧流失与付费墙分析'}
+            {activeTab === 'monetization' && '混合变现数据 (IAA + IAP)'}
+            {activeTab === 'retention' && '留存分析'}
+            {activeTab === 'new_returning' && '新老用户对比 (New vs. Returning)'}
+            {activeTab === 'prd' && '数据模块说明'}
             {activeTab === 'users' && '用户分析'}
           </h1>
           
@@ -148,6 +193,21 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5">
+              <Monitor className="w-4 h-4 text-slate-500" />
+              <select 
+                className="bg-transparent text-sm font-medium text-slate-700 focus:outline-none cursor-pointer"
+                value={selectedOS}
+                onChange={(e) => setSelectedOS(e.target.value)}
+              >
+                <option value="all">所有系统</option>
+                <option value="ios">iOS</option>
+                <option value="android">Android</option>
+                <option value="h5">H5</option>
+                <option value="tk_mini">TK小程序</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5">
               <Calendar className="w-4 h-4 text-slate-500" />
               <select 
                 className="bg-transparent text-sm font-medium text-slate-700 focus:outline-none cursor-pointer"
@@ -170,12 +230,16 @@ export default function App() {
 
         {/* Dashboard Content Area */}
         <div className="flex-1 overflow-auto p-8">
-          {activeTab === 'funnel' && <PaymentFunnel app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
-          {activeTab === 'content' && <ContentAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
-          {activeTab === 'performance' && <PlaybackPerformance app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
-          {activeTab === 'ua' && <UserAcquisition app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
+          {activeTab === 'funnel' && <PaymentFunnel app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'content' && <ContentAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'episode_dropoff' && <EpisodeDropoff app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'monetization' && <HybridMonetization app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'retention' && <RetentionAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'new_returning' && <NewVsReturning app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'performance' && <PlaybackPerformance app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
+          {activeTab === 'ua' && <UserAcquisition app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
           {activeTab === 'prd' && <PRD />}
-          {activeTab === 'users' && <UserAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} />}
+          {activeTab === 'users' && <UserAnalysis app={selectedApp} country={selectedCountry} dateRange={dateRange} os={selectedOS} />}
         </div>
       </main>
     </div>
